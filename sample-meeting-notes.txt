@@ -1,0 +1,11 @@
+Q3 retro for the mobile app — Tom, Sarah, Priya, Mike. Started 10 minutes late because Sarah's prior meeting overran.
+
+Overall the launch went well — 4.6 star average, 12k downloads in week one, beat our 8k target. Sarah raised that customer support tickets spiked by 40% on day three. Most were about the onboarding flow. We agreed to push a fix in next sprint and Priya will lead the onboarding redesign.
+
+Mike flagged the analytics pipeline broke twice during launch week — root cause was the rate limit on the third-party SDK. We agreed to move to the paid tier (£400/month). Mike to set this up by 28 July.
+
+Quick chat about hiring — we're two weeks behind on the senior iOS role. Tom will chase the recruiter and report back next Tuesday.
+
+Discussion on whether to extend the launch promo (50% off premium). Decided to extend by two weeks but no further. Sarah to update the comms by Friday.
+
+Lots of debate on Q4 priorities but ran out of time — parked for next week.
