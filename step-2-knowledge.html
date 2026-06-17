@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Overview — Lab Guide 1</title>
+<title>Step 2 — Knowledge — Lab Guide 1</title>
 <style>
 :root{--purple:#30053a;--pink:#fb4dc3;--orange:#fc9634;--lilac:#6633fc;--mint:#64fcc9;--softpnk:#fbd0ee;--panel:#f7f7f7;--card:#fafafa;--line:#e0e0e0;--grey:#555}
 *{box-sizing:border-box}
@@ -122,9 +122,9 @@ footer.brand .tag{color:var(--mint);margin-top:8px;font-style:italic}
 </header>
 
 <nav class="toc">
-  <a href="index.html" class="current">Overview</a>
+  <a href="index.html" class="">Overview</a>
   <a href="step-1-setup.html" class="">Step 1</a>
-  <a href="step-2-knowledge.html" class="">Step 2</a>
+  <a href="step-2-knowledge.html" class="current">Step 2</a>
   <a href="step-3-tools.html" class="">Step 3</a>
   <a href="step-4-behaviour.html" class="">Step 4</a>
   <a href="step-5-test.html" class="">Step 5</a>
@@ -132,73 +132,38 @@ footer.brand .tag{color:var(--mint);margin-top:8px;font-style:italic}
 
 <main>
 
-<h2>Lab overview</h2>
-<p>In this lab you'll build a single Council Tax Assistant agent entirely in the no-code Agent Builder &mdash; no coding required. The agent will answer council tax questions, explain discount eligibility, run a visual workflow to apply for the single person discount, and search the web for the latest policy updates.</p>
-<p>This is your first pass through the Agent Builder. We'll layer in a knowledge base, a workflow, and a web search tool one at a time.</p>
+<h2>Step 2 &mdash; Add the knowledge base</h2>
+<p>A knowledge base lets the agent look things up in your documents and cite them as the source of its answers. We're using Riverside Borough Council's full council tax handbook &mdash; bands, discounts, payment methods, moving home, enforcement, FAQs.</p>
 
-<h3>What you'll learn</h3>
-<div class="learn-grid">
-  <div class="card"><div class="t">Knowledge bases</div>Upload documents the agent can search and cite as the source of its answers.</div>
-  <div class="card"><div class="t">Visual workflows</div>Drag-and-drop a deterministic process for predictable, structured tasks like discount applications.</div>
-  <div class="card"><div class="t">Web search tool</div>Let the agent look up the latest policy and legal information from trusted sources.</div>
-  <div class="card"><div class="t">Behaviour &amp; guidelines</div>Define the agent's role, tone, and the rules it must follow in specific scenarios.</div>
+<div class="dl-inline">
+  <div class="info">You'll select this knowledge in the steps below. If you want the source: <span class="fname">council_tax_knowledge.pdf</span></div>
+  <a class="dl-btn" href="council_tax_knowledge.pdf" download>Download</a>
 </div>
 
-<h3>Meet Amir</h3>
-<div class="persona">
-  <h4>Profile</h4>
-  <p>A Council Tax Advisor at Riverside Borough Council. Most of his week is spent answering the same questions over and over &mdash; bands, single person discount, payment plans, what to do when you move home. He wants a 24/7 digital assistant that can take the FAQs off his desk so he can focus on the complex casework that genuinely needs a human.</p>
-  <h4>Goals</h4>
-  <ul>
-    <li>Cut the volume of repetitive FAQ-level calls coming into the council.</li>
-    <li>Give citizens accurate, consistent answers grounded in the council's own policies.</li>
-    <li>Let people start a single person discount application without waiting for office hours.</li>
-  </ul>
-  <h4>Needs</h4>
-  <ul>
-    <li>An agent that cites the source documents so citizens (and Amir) can verify the answer.</li>
-    <li>A structured workflow for the most common application &mdash; not a free-form chat that misses required fields.</li>
-    <li>Access to the latest gov.uk and council policy updates without having to retrain the agent.</li>
-  </ul>
-  <h4>Concerns</h4>
-  <ul>
-    <li>Hallucinated financial advice that ends up costing citizens money.</li>
-    <li>People not being escalated to a human when the situation genuinely needs one.</li>
-    <li>Sensitive cases (debt, mental health) being handled without empathy.</li>
-  </ul>
-</div>
+<h3>Step 2.1 &mdash; Select the existing knowledge</h3>
+<p>The workshop tenant has the council tax knowledge base pre-loaded under <strong>Existing Knowledge</strong>. In production you'd upload your own documents or connect to an external store (database, SharePoint, etc.).</p>
+<ol class="steps">
+  <li>On your agent, scroll down to <strong>Knowledge</strong>.</li>
+  <li>Click <strong>Add Source</strong>.</li>
+  <li>Choose <strong>Existing Knowledge</strong>.</li>
+  <li>Select <strong>Council Tax Knowledge</strong> from the list.</li>
+  <li>Confirm. The knowledge appears in your agent's Knowledge section.</li>
+</ol>
 
-<h2>Architecture &mdash; one agent, three capabilities</h2>
-<div class="arch-flow">
-  <div class="row"><span class="lbl">Agent</span><span><strong>Council Tax Assistant</strong> &mdash; Default style, single agent, no collaborators</span></div>
-  <div class="row"><span class="lbl">Knowledge</span><span><code>council_tax_knowledge.pdf</code> &mdash; Riverside Borough Council's bands, discounts, payment methods, FAQs</span></div>
-  <div class="row"><span class="lbl">Workflow</span><span><strong>Sole Occupant Discount Workflow</strong> &mdash; visual no-code flow that runs the 25% single person discount application</span></div>
-  <div class="row"><span class="lbl">Tool</span><span><strong>Tavily Search</strong> &mdash; AI web search for recent council tax changes and legal/policy updates</span></div>
-</div>
+<div class="footer-note">Why a knowledge base matters: the agent's answers about bands, discounts and procedures will come directly from this document, with a citation. Citizens (and Amir) can click the citation to see exactly where the answer came from.</div>
 
-<h3>Step-by-step</h3>
-<div class="cards-overview">
-  <a href="step-1-setup.html"><div class="step">Step 1</div><div class="name">Setup</div><div class="blurb">Name the agent, write its description, pick Default style.</div></a>
-  <a href="step-2-knowledge.html"><div class="step">Step 2</div><div class="name">Knowledge base</div><div class="blurb">Add Riverside Borough Council's policy document so the agent can cite it.</div></a>
-  <a href="step-3-tools.html"><div class="step">Step 3</div><div class="name">Tools &amp; workflow</div><div class="blurb">Attach the Sole Occupant Discount Workflow and the Tavily Search tool.</div></a>
-  <a href="step-4-behaviour.html"><div class="step">Step 4</div><div class="name">Behaviour &amp; guidelines</div><div class="blurb">Paste the instructions, add edge-case guidelines and starter prompts.</div></a>
-  <a href="step-5-test.html"><div class="step">Step 5</div><div class="name">Test</div><div class="blurb">Citizens' questions, the discount workflow and a web-search prompt.</div></a>
+<h3>Step 2.2 &mdash; Quick test (optional)</h3>
+<p>You can save and try the knowledge base now if you want a sanity check. Paste this into the playground chat:</p>
+<div class="panel">
+  <div class="panel-head"><span>Try this in the playground</span><button class="copy-btn" onclick="copyPanel(this)">Copy</button></div>
+<pre>What are the council tax bands and their annual charges?</pre>
 </div>
-
-<h2>Lab materials</h2>
-<p>The knowledge base PDF is included for completeness &mdash; in the workshop tenant it has already been uploaded under <strong>Existing Knowledge</strong>, so in Step 2 you'll select it rather than upload it.</p>
-<div class="downloads">
-  <div class="dl-card">
-    <div class="fname">council_tax_knowledge.pdf</div>
-    <div class="desc">Riverside Borough Council's council tax handbook &mdash; bands A&ndash;H, discounts and exemptions, payment methods, moving home procedures, band challenge process, enforcement, FAQs and contact details.</div>
-    <a class="dl-btn" href="council_tax_knowledge.pdf" download>Download</a>
-  </div>
-</div>
+<p>You should see Riverside Borough Council's specific band information come back. Click the citation dropdown at the end of the message to see exactly which part of the document the answer came from.</p>
 
 
 <div class="pager">
-  <a class="disabled" href="#">&larr;</a>
-  <a href="step-1-setup.html">Step 1 — Setup →</a>
+  <a href="step-1-setup.html">← Step 1 — Setup</a>
+  <a href="step-3-tools.html">Step 3 — Tools →</a>
 </div>
 </main>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Overview — Lab Guide 1</title>
+<title>Step 3 — Tools & workflow — Lab Guide 1</title>
 <style>
 :root{--purple:#30053a;--pink:#fb4dc3;--orange:#fc9634;--lilac:#6633fc;--mint:#64fcc9;--softpnk:#fbd0ee;--panel:#f7f7f7;--card:#fafafa;--line:#e0e0e0;--grey:#555}
 *{box-sizing:border-box}
@@ -122,83 +122,50 @@ footer.brand .tag{color:var(--mint);margin-top:8px;font-style:italic}
 </header>
 
 <nav class="toc">
-  <a href="index.html" class="current">Overview</a>
+  <a href="index.html" class="">Overview</a>
   <a href="step-1-setup.html" class="">Step 1</a>
   <a href="step-2-knowledge.html" class="">Step 2</a>
-  <a href="step-3-tools.html" class="">Step 3</a>
+  <a href="step-3-tools.html" class="current">Step 3</a>
   <a href="step-4-behaviour.html" class="">Step 4</a>
   <a href="step-5-test.html" class="">Step 5</a>
 </nav>
 
 <main>
 
-<h2>Lab overview</h2>
-<p>In this lab you'll build a single Council Tax Assistant agent entirely in the no-code Agent Builder &mdash; no coding required. The agent will answer council tax questions, explain discount eligibility, run a visual workflow to apply for the single person discount, and search the web for the latest policy updates.</p>
-<p>This is your first pass through the Agent Builder. We'll layer in a knowledge base, a workflow, and a web search tool one at a time.</p>
+<h2>Step 3 &mdash; Add the workflow and search tool</h2>
+<p>Two capabilities, both pre-deployed in this tenant: a visual workflow for the single person discount application, and Tavily Search for looking up the latest policy and legal updates.</p>
 
-<h3>What you'll learn</h3>
-<div class="learn-grid">
-  <div class="card"><div class="t">Knowledge bases</div>Upload documents the agent can search and cite as the source of its answers.</div>
-  <div class="card"><div class="t">Visual workflows</div>Drag-and-drop a deterministic process for predictable, structured tasks like discount applications.</div>
-  <div class="card"><div class="t">Web search tool</div>Let the agent look up the latest policy and legal information from trusted sources.</div>
-  <div class="card"><div class="t">Behaviour &amp; guidelines</div>Define the agent's role, tone, and the rules it must follow in specific scenarios.</div>
+<h3>Step 3.1 &mdash; Add the Sole Occupant Discount Workflow</h3>
+<p>This is a no-code visual workflow that walks a citizen through the 25% single person discount application &mdash; deterministic, structured, predictable.</p>
+<ol class="steps">
+  <li>Scroll to <strong>Toolset</strong> on your agent.</li>
+  <li>Click <strong>Add tool</strong> &rarr; <strong>Add from local instance</strong>.</li>
+  <li>Scroll down and select <strong>Sole Occupant Discount Workflow</strong>.</li>
+  <li>Add it. It appears in the Toolset.</li>
+</ol>
+
+<div class="ui-shot"><img src="ui-agent-toolset.png" alt="Toolset &mdash; Add tool" onerror="this.style.display='none'"><div class="cap">Toolset &mdash; Add tool</div><div class="sub">Scroll to the Toolset section and click <strong>Add tool</strong>, then <strong>Add from local instance</strong>.</div></div>
+
+<div class="callout">
+  <div class="lbl">Optional &mdash; peek at the workflow</div>
+  <p style="margin:0">Click the three dots next to the workflow and <strong>Open in Flow Builder</strong>. You'll see a Start node, a <em>Check Single Person</em> decision diamond, a successful-application branch with a form (name, address, council tax reference), and an unsuccessful branch with an explanation. This is the kind of structured logic that's hard to get right with prompting alone &mdash; the workflow makes it deterministic.</p>
 </div>
 
-<h3>Meet Amir</h3>
-<div class="persona">
-  <h4>Profile</h4>
-  <p>A Council Tax Advisor at Riverside Borough Council. Most of his week is spent answering the same questions over and over &mdash; bands, single person discount, payment plans, what to do when you move home. He wants a 24/7 digital assistant that can take the FAQs off his desk so he can focus on the complex casework that genuinely needs a human.</p>
-  <h4>Goals</h4>
-  <ul>
-    <li>Cut the volume of repetitive FAQ-level calls coming into the council.</li>
-    <li>Give citizens accurate, consistent answers grounded in the council's own policies.</li>
-    <li>Let people start a single person discount application without waiting for office hours.</li>
-  </ul>
-  <h4>Needs</h4>
-  <ul>
-    <li>An agent that cites the source documents so citizens (and Amir) can verify the answer.</li>
-    <li>A structured workflow for the most common application &mdash; not a free-form chat that misses required fields.</li>
-    <li>Access to the latest gov.uk and council policy updates without having to retrain the agent.</li>
-  </ul>
-  <h4>Concerns</h4>
-  <ul>
-    <li>Hallucinated financial advice that ends up costing citizens money.</li>
-    <li>People not being escalated to a human when the situation genuinely needs one.</li>
-    <li>Sensitive cases (debt, mental health) being handled without empathy.</li>
-  </ul>
-</div>
+<h3>Step 3.2 &mdash; Add Tavily Search</h3>
+<p>Tavily is an AI-powered web search that filters results to trusted sources and returns structured, citation-ready summaries. Perfect for "what changed recently?" type questions.</p>
+<ol class="steps">
+  <li>Still in <strong>Toolset</strong>, click <strong>Add tool</strong> &rarr; <strong>Add from local instance</strong>.</li>
+  <li>Search for <strong>Tavily Search</strong>.</li>
+  <li>Add it.</li>
+  <li>Confirm both tools are now listed in the Toolset.</li>
+</ol>
 
-<h2>Architecture &mdash; one agent, three capabilities</h2>
-<div class="arch-flow">
-  <div class="row"><span class="lbl">Agent</span><span><strong>Council Tax Assistant</strong> &mdash; Default style, single agent, no collaborators</span></div>
-  <div class="row"><span class="lbl">Knowledge</span><span><code>council_tax_knowledge.pdf</code> &mdash; Riverside Borough Council's bands, discounts, payment methods, FAQs</span></div>
-  <div class="row"><span class="lbl">Workflow</span><span><strong>Sole Occupant Discount Workflow</strong> &mdash; visual no-code flow that runs the 25% single person discount application</span></div>
-  <div class="row"><span class="lbl">Tool</span><span><strong>Tavily Search</strong> &mdash; AI web search for recent council tax changes and legal/policy updates</span></div>
-</div>
-
-<h3>Step-by-step</h3>
-<div class="cards-overview">
-  <a href="step-1-setup.html"><div class="step">Step 1</div><div class="name">Setup</div><div class="blurb">Name the agent, write its description, pick Default style.</div></a>
-  <a href="step-2-knowledge.html"><div class="step">Step 2</div><div class="name">Knowledge base</div><div class="blurb">Add Riverside Borough Council's policy document so the agent can cite it.</div></a>
-  <a href="step-3-tools.html"><div class="step">Step 3</div><div class="name">Tools &amp; workflow</div><div class="blurb">Attach the Sole Occupant Discount Workflow and the Tavily Search tool.</div></a>
-  <a href="step-4-behaviour.html"><div class="step">Step 4</div><div class="name">Behaviour &amp; guidelines</div><div class="blurb">Paste the instructions, add edge-case guidelines and starter prompts.</div></a>
-  <a href="step-5-test.html"><div class="step">Step 5</div><div class="name">Test</div><div class="blurb">Citizens' questions, the discount workflow and a web-search prompt.</div></a>
-</div>
-
-<h2>Lab materials</h2>
-<p>The knowledge base PDF is included for completeness &mdash; in the workshop tenant it has already been uploaded under <strong>Existing Knowledge</strong>, so in Step 2 you'll select it rather than upload it.</p>
-<div class="downloads">
-  <div class="dl-card">
-    <div class="fname">council_tax_knowledge.pdf</div>
-    <div class="desc">Riverside Borough Council's council tax handbook &mdash; bands A&ndash;H, discounts and exemptions, payment methods, moving home procedures, band challenge process, enforcement, FAQs and contact details.</div>
-    <a class="dl-btn" href="council_tax_knowledge.pdf" download>Download</a>
-  </div>
-</div>
+<div class="footer-note">Tavily covers what the knowledge base can't &mdash; budget announcements, legal changes, news. Pair it with the knowledge base and you've got grounded answers for everything from yesterday's policy update to last year's appeals process.</div>
 
 
 <div class="pager">
-  <a class="disabled" href="#">&larr;</a>
-  <a href="step-1-setup.html">Step 1 — Setup →</a>
+  <a href="step-2-knowledge.html">← Step 2 — Knowledge</a>
+  <a href="step-4-behaviour.html">Step 4 — Behaviour →</a>
 </div>
 </main>
 

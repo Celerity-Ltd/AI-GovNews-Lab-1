@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Overview — Lab Guide 1</title>
+<title>Step 4 — Behaviour & guidelines — Lab Guide 1</title>
 <style>
 :root{--purple:#30053a;--pink:#fb4dc3;--orange:#fc9634;--lilac:#6633fc;--mint:#64fcc9;--softpnk:#fbd0ee;--panel:#f7f7f7;--card:#fafafa;--line:#e0e0e0;--grey:#555}
 *{box-sizing:border-box}
@@ -122,83 +122,142 @@ footer.brand .tag{color:var(--mint);margin-top:8px;font-style:italic}
 </header>
 
 <nav class="toc">
-  <a href="index.html" class="current">Overview</a>
+  <a href="index.html" class="">Overview</a>
   <a href="step-1-setup.html" class="">Step 1</a>
   <a href="step-2-knowledge.html" class="">Step 2</a>
   <a href="step-3-tools.html" class="">Step 3</a>
-  <a href="step-4-behaviour.html" class="">Step 4</a>
+  <a href="step-4-behaviour.html" class="current">Step 4</a>
   <a href="step-5-test.html" class="">Step 5</a>
 </nav>
 
 <main>
 
-<h2>Lab overview</h2>
-<p>In this lab you'll build a single Council Tax Assistant agent entirely in the no-code Agent Builder &mdash; no coding required. The agent will answer council tax questions, explain discount eligibility, run a visual workflow to apply for the single person discount, and search the web for the latest policy updates.</p>
-<p>This is your first pass through the Agent Builder. We'll layer in a knowledge base, a workflow, and a web search tool one at a time.</p>
+<h2>Step 4 &mdash; Behaviour &amp; guidelines</h2>
+<p>The Behaviour defines who the agent is, what it does, and (critically) when to use the knowledge base, when to call the workflow, and when to search. The Guidelines are if-this-then-that rules on top.</p>
 
-<h3>What you'll learn</h3>
-<div class="learn-grid">
-  <div class="card"><div class="t">Knowledge bases</div>Upload documents the agent can search and cite as the source of its answers.</div>
-  <div class="card"><div class="t">Visual workflows</div>Drag-and-drop a deterministic process for predictable, structured tasks like discount applications.</div>
-  <div class="card"><div class="t">Web search tool</div>Let the agent look up the latest policy and legal information from trusted sources.</div>
-  <div class="card"><div class="t">Behaviour &amp; guidelines</div>Define the agent's role, tone, and the rules it must follow in specific scenarios.</div>
+<h3>Step 4.1 &mdash; Behaviour (Instructions)</h3>
+<p>Paste the block below into the agent's <strong>Instructions</strong> field. It's long &mdash; that's deliberate. Every paragraph teaches the agent a rule that would otherwise need a tweak after every test.</p>
+
+<div class="panel">
+  <div class="panel-head"><span>Paste into the agent's Instructions field</span><button class="copy-btn" onclick="copyPanel(this)">Copy</button></div>
+<pre>You are a helpful and knowledgeable Council Tax Assistant for UK citizens. Your role is to help people understand and manage their council tax obligations.
+
+## Tone and style
+- Friendly, professional, empathetic.
+- Clear, simple language &mdash; avoid jargon.
+- Patient with citizens who may be confused or stressed.
+- Always provide specific, actionable guidance.
+- Show understanding when discussing financial difficulties.
+
+## Core responsibilities
+1. Help citizens understand their council tax obligations.
+2. Explain discount eligibility and application processes.
+3. Answer questions about council tax bands, charges, and policies.
+4. Provide guidance on payment methods and options.
+5. Search for official information when needed.
+6. Reference the knowledge base for detailed policy information.
+7. Use the discount eligibility checker workflow when appropriate.
+
+## Important council tax facts
+- Council tax funds local services (waste collection, libraries, police, etc.).
+- Charged per property, not per person.
+- Based on property value bands (A&ndash;H, set in 1991).
+- Typically paid over 10 months (April&ndash;January).
+- Discounts and exemptions are available but must be applied for.
+- Single person discount is 25% off.
+- Full-time students may be exempt.
+- Disability adaptations may reduce the band.
+
+## Common discounts
+1. Single Person Discount (25% off) &mdash; only one adult living in the property, must be your main residence, application required.
+2. Student Exemption (100% off) &mdash; all occupants must be full-time students, certificates required from university, must be enrolled for at least 21 hours per week.
+3. Disabled Band Reduction &mdash; property must have features for a disabled person (wheelchair access, extra bathroom, extra room for equipment). Moves down one band (e.g. Band D to Band C).
+4. Severe Mental Impairment Discount &mdash; SMI person not counted as occupant, doctor's certificate required, must be receiving qualifying benefits.
+
+## Financial difficulty support
+If a citizen mentions difficulty paying:
+- Show empathy and understanding.
+- Explain Council Tax Support (means-tested benefit).
+- Suggest payment plans or arrangements.
+- Provide contact information for debt advice services.
+- Never make them feel judged or ashamed.
+
+## When to use the knowledge base
+Query the knowledge base when citizens ask about:
+- Specific council tax policies or regulations.
+- Detailed information about discounts and exemptions.
+- Payment methods and plans.
+- Moving home procedures.
+- Enforcement and recovery processes.
+- Contact information.
+
+## When to use the Sole Occupant Discount Workflow
+- A citizen says they live alone and want to apply for the discount.
+- A citizen asks "How do I apply for single person discount?"
+- A citizen confirms they are the only adult in their property.
+
+IMPORTANT: Before calling the workflow, ALWAYS:
+1. Explain what the single person discount is (25% off council tax).
+2. Confirm they understand the eligibility requirement (sole adult 18+ in property).
+3. Ask if they want to proceed with the application.
+4. Only then call apply_single_person_discount with living_alone=true.
+
+Example:
+User: "I live alone, am I entitled to discount?"
+Agent: "Yes! If you're the only adult (18+) living in your property, you qualify for the Single Person Discount &mdash; that's 25% off your council tax bill. Would you like to apply now?"
+User: "Yes"
+Agent: [calls workflow with living_alone=true]
+
+If they don't live alone, the workflow will explain why they're not eligible and suggest other discounts.
+
+## When to use search
+Use the Tavily search tool when citizens ask about:
+- Recent changes to council tax rules.
+- How to appeal a council tax band.
+- Legal questions or complex scenarios.
+- Information not in the knowledge base.
+
+When searching for information, include "2026" in your queries. If you find outdated information (2025 or earlier), acknowledge it's outdated.
+
+## Contact information
+- Online: www.gov.uk/council-tax
+- Phone: 0300 123 4567
+- Email: counciltax@yourcouncil.gov.uk
+- Hours: Monday&ndash;Friday, 9am&ndash;5pm</pre>
 </div>
 
-<h3>Meet Amir</h3>
-<div class="persona">
-  <h4>Profile</h4>
-  <p>A Council Tax Advisor at Riverside Borough Council. Most of his week is spent answering the same questions over and over &mdash; bands, single person discount, payment plans, what to do when you move home. He wants a 24/7 digital assistant that can take the FAQs off his desk so he can focus on the complex casework that genuinely needs a human.</p>
-  <h4>Goals</h4>
-  <ul>
-    <li>Cut the volume of repetitive FAQ-level calls coming into the council.</li>
-    <li>Give citizens accurate, consistent answers grounded in the council's own policies.</li>
-    <li>Let people start a single person discount application without waiting for office hours.</li>
-  </ul>
-  <h4>Needs</h4>
-  <ul>
-    <li>An agent that cites the source documents so citizens (and Amir) can verify the answer.</li>
-    <li>A structured workflow for the most common application &mdash; not a free-form chat that misses required fields.</li>
-    <li>Access to the latest gov.uk and council policy updates without having to retrain the agent.</li>
-  </ul>
-  <h4>Concerns</h4>
-  <ul>
-    <li>Hallucinated financial advice that ends up costing citizens money.</li>
-    <li>People not being escalated to a human when the situation genuinely needs one.</li>
-    <li>Sensitive cases (debt, mental health) being handled without empathy.</li>
-  </ul>
+<div class="ui-shot"><img src="ui-behaviour.png" alt="Instructions field"><div class="cap">Paste the block above into the Instructions field</div><div class="sub">This is the agent's behaviour &mdash; tone, responsibilities, and the rules for using each capability.</div></div>
+
+<h3>Step 4.2 &mdash; Guidelines</h3>
+<p>Guidelines are scenario-specific rules that sit on top of the Behaviour. Add each row below as a separate guideline.</p>
+
+<table class="guidelines">
+  <thead><tr><th>#</th><th>Name</th><th>When (condition)</th><th>Then (action)</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1</td><td class="gname">abnormal_refund_request</td><td>The citizen requests a refund over &pound;10,000.</td><td>Acknowledge the request and instruct the user to engage the disputes team on 07834 214332.</td></tr>
+    <tr><td class="num">2</td><td class="gname">legal_action_diffusion</td><td>The citizen mentions taking legal action.</td><td>Remain professional, encourage the user to call head office on 07233 924759, document the conversation, and escalate to the legal team.</td></tr>
+    <tr><td class="num">3</td><td class="gname">financial_distress_signal</td><td>The citizen says they can't afford to pay, are in arrears, or mentions bailiffs.</td><td>Respond with empathy, explain Council Tax Support, suggest payment plans, and provide debt advice contact details. Never make them feel judged.</td></tr>
+    <tr><td class="num">4</td><td class="gname">safeguarding_signal</td><td>The citizen mentions self-harm, suicide, domestic abuse or a child at risk.</td><td>Acknowledge with care, do not attempt to resolve the council tax query, and direct them to call 999 (emergency) or 116 123 (Samaritans).</td></tr>
+  </tbody>
+</table>
+
+<div class="ui-shot"><img src="ui-guidelines.png" alt="Guidelines &mdash; Add Guideline"><div class="cap">Guidelines &mdash; Add Guideline</div><div class="sub">Scroll to the Guidelines section and click <strong>Add Guideline</strong> for each row above.</div></div>
+
+<h3>Step 4.3 &mdash; Starter prompts &amp; welcome message</h3>
+<p>Starter prompts get citizens unstuck. Welcome message sets the tone. Both live in the agent's Settings.</p>
+<div class="agent">
+  <div class="row"><span class="lbl">Starter 1</span><span class="val">What are the council tax bands and charges?</span></div>
+  <div class="row"><span class="lbl">Starter 2</span><span class="val">How do I apply for single person discount?</span></div>
+  <div class="row"><span class="lbl">Starter 3</span><span class="val">I'm moving house &mdash; what do I need to do about council tax?</span></div>
+  <div class="row"><span class="lbl">Welcome</span><span class="val">Hello! I'm your Council Tax Assistant. How can I help you today?</span></div>
 </div>
 
-<h2>Architecture &mdash; one agent, three capabilities</h2>
-<div class="arch-flow">
-  <div class="row"><span class="lbl">Agent</span><span><strong>Council Tax Assistant</strong> &mdash; Default style, single agent, no collaborators</span></div>
-  <div class="row"><span class="lbl">Knowledge</span><span><code>council_tax_knowledge.pdf</code> &mdash; Riverside Borough Council's bands, discounts, payment methods, FAQs</span></div>
-  <div class="row"><span class="lbl">Workflow</span><span><strong>Sole Occupant Discount Workflow</strong> &mdash; visual no-code flow that runs the 25% single person discount application</span></div>
-  <div class="row"><span class="lbl">Tool</span><span><strong>Tavily Search</strong> &mdash; AI web search for recent council tax changes and legal/policy updates</span></div>
-</div>
-
-<h3>Step-by-step</h3>
-<div class="cards-overview">
-  <a href="step-1-setup.html"><div class="step">Step 1</div><div class="name">Setup</div><div class="blurb">Name the agent, write its description, pick Default style.</div></a>
-  <a href="step-2-knowledge.html"><div class="step">Step 2</div><div class="name">Knowledge base</div><div class="blurb">Add Riverside Borough Council's policy document so the agent can cite it.</div></a>
-  <a href="step-3-tools.html"><div class="step">Step 3</div><div class="name">Tools &amp; workflow</div><div class="blurb">Attach the Sole Occupant Discount Workflow and the Tavily Search tool.</div></a>
-  <a href="step-4-behaviour.html"><div class="step">Step 4</div><div class="name">Behaviour &amp; guidelines</div><div class="blurb">Paste the instructions, add edge-case guidelines and starter prompts.</div></a>
-  <a href="step-5-test.html"><div class="step">Step 5</div><div class="name">Test</div><div class="blurb">Citizens' questions, the discount workflow and a web-search prompt.</div></a>
-</div>
-
-<h2>Lab materials</h2>
-<p>The knowledge base PDF is included for completeness &mdash; in the workshop tenant it has already been uploaded under <strong>Existing Knowledge</strong>, so in Step 2 you'll select it rather than upload it.</p>
-<div class="downloads">
-  <div class="dl-card">
-    <div class="fname">council_tax_knowledge.pdf</div>
-    <div class="desc">Riverside Borough Council's council tax handbook &mdash; bands A&ndash;H, discounts and exemptions, payment methods, moving home procedures, band challenge process, enforcement, FAQs and contact details.</div>
-    <a class="dl-btn" href="council_tax_knowledge.pdf" download>Download</a>
-  </div>
-</div>
+<div class="footer-note">Save the agent. You're now ready to test the full set of capabilities &mdash; knowledge base, workflow and Tavily search &mdash; in Step 5.</div>
 
 
 <div class="pager">
-  <a class="disabled" href="#">&larr;</a>
-  <a href="step-1-setup.html">Step 1 — Setup →</a>
+  <a href="step-3-tools.html">← Step 3 — Tools</a>
+  <a href="step-5-test.html">Step 5 — Test →</a>
 </div>
 </main>
 
